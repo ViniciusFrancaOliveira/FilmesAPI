@@ -8,7 +8,7 @@ namespace UsuariosApi.Services
 {
     public class EmailService
     {
-        private IConfiguration _configuration;
+        private readonly IConfiguration _configuration;
 
         public EmailService(IConfiguration configuration)
         {

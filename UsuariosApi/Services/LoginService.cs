@@ -10,8 +10,8 @@ namespace UsuariosApi.Services
 {
     public class LoginService
     {
-        private SignInManager<IdentityUser<int>> _signInManager;
-        private TokenService _tokenService;
+        private readonly SignInManager<IdentityUser<int>> _signInManager;
+        private readonly TokenService _tokenService;
 
         public LoginService(SignInManager<IdentityUser<int>> signInManager, TokenService tokenService)
         {
@@ -25,7 +25,8 @@ namespace UsuariosApi.Services
             if (resultadoIdentity.Result.Succeeded)
             {
                 var identityUser = _signInManager.UserManager.Users.FirstOrDefault(usuario => usuario.NormalizedUserName == request.UserName.ToUpper());
-                Token token = _tokenService.CreateToken(identityUser);
+                string userRole = _signInManager.UserManager.GetRolesAsync(identityUser).Result.FirstOrDefault();
+                Token token = _tokenService.CreateToken(identityUser, userRole);
                 return Result.Ok().WithSuccess(token.Value);
             }
             return Result.Fail("Login falhou.");

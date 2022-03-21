@@ -11,7 +11,7 @@ namespace UsuariosApi.Services
 {
     public class LogoutService
     {
-        private SignInManager<IdentityUser<int>> _signInManager;
+        private readonly SignInManager<IdentityUser<int>> _signInManager;
 
         public LogoutService(SignInManager<IdentityUser<int>> signInManager)
         {

@@ -13,24 +13,34 @@ namespace UsuariosApi.Services
 {
     public class CadastroService
     {
-        private IMapper _mapper;
-        private UserManager<IdentityUser<int>> _userManager;
-        private EmailService _emailService;
+        private readonly IMapper _mapper;
+        private readonly UserManager<IdentityUser<int>> _userManager;
+        private readonly EmailService _emailService;
+        private readonly RoleManager<IdentityRole<int>> _roleManager;
          
-        public CadastroService(IMapper mapper, UserManager<IdentityUser<int>> userManager, EmailService emailService)
+        public CadastroService(IMapper mapper, UserManager<IdentityUser<int>> userManager, EmailService emailService, RoleManager<IdentityRole<int>> roleManager)
         {
             _mapper = mapper;
             _userManager = userManager;
             _emailService = emailService;
+            _roleManager = roleManager;
+
         }
 
         public Result CadastroUsuario(CreateUsuarioDto createDto)
         {
             Usuario usuario = _mapper.Map<Usuario>(createDto);
             IdentityUser<int> usuarioIdentity = _mapper.Map<IdentityUser<int>>(usuario);
-            Task<IdentityResult> resultadoIdentity = _userManager.CreateAsync(usuarioIdentity, createDto.Password);
+            IdentityResult resultadoIdentity = _userManager.CreateAsync(usuarioIdentity, createDto.Password).Result;
 
-            if (resultadoIdentity.Result.Succeeded)
+            if (_roleManager.Roles.Contains(new IdentityRole<int>("admin")) == false )
+            { 
+                var role = _roleManager.CreateAsync(new IdentityRole<int>("admin")).Result; 
+            }
+
+            var user = _userManager.AddToRoleAsync(usuarioIdentity, "admin").Result;
+
+            if (resultadoIdentity.Succeeded)
             {
                 var code = _userManager.GenerateEmailConfirmationTokenAsync(usuarioIdentity).Result;
                 var encodedCode = HttpUtility.UrlEncode(code);
