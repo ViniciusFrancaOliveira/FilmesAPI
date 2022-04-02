@@ -33,13 +33,6 @@ namespace UsuariosApi.Services
             IdentityUser<int> usuarioIdentity = _mapper.Map<IdentityUser<int>>(usuario);
             IdentityResult resultadoIdentity = _userManager.CreateAsync(usuarioIdentity, createDto.Password).Result;
 
-            if (_roleManager.Roles.Contains(new IdentityRole<int>("admin")) == false )
-            { 
-                var role = _roleManager.CreateAsync(new IdentityRole<int>("admin")).Result; 
-            }
-
-            var user = _userManager.AddToRoleAsync(usuarioIdentity, "admin").Result;
-
             if (resultadoIdentity.Succeeded)
             {
                 var code = _userManager.GenerateEmailConfirmationTokenAsync(usuarioIdentity).Result;

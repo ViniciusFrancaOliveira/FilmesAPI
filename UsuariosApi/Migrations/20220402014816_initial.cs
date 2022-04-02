@@ -4,7 +4,7 @@ using MySql.EntityFrameworkCore.Metadata;
 
 namespace UsuariosApi.Migrations
 {
-    public partial class usuario : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,8 +14,8 @@ namespace UsuariosApi.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(type: "varchar(127)", maxLength: 256, nullable: true),
-                    NormalizedName = table.Column<string>(type: "varchar(127)", maxLength: 127, nullable: true),
+                    Name = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
+                    NormalizedName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -29,10 +29,10 @@ namespace UsuariosApi.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    UserName = table.Column<string>(type: "varchar(127)", maxLength: 127, nullable: true),
-                    NormalizedUserName = table.Column<string>(type: "varchar(127)", maxLength: 127, nullable: true),
-                    Email = table.Column<string>(type: "varchar(127)", maxLength: 127, nullable: true),
-                    NormalizedEmail = table.Column<string>(type: "varchar(127)", maxLength: 127, nullable: true),
+                    UserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
                     EmailConfirmed = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     PasswordHash = table.Column<string>(type: "text", nullable: true),
                     SecurityStamp = table.Column<string>(type: "text", nullable: true),
@@ -95,8 +95,8 @@ namespace UsuariosApi.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "varchar(127)", nullable: false),
-                    ProviderKey = table.Column<string>(type: "varchar(127)", nullable: false),
+                    LoginProvider = table.Column<string>(type: "varchar(200)", nullable: false),
+                    ProviderKey = table.Column<string>(type: "varchar(200)", nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "text", nullable: true),
                     UserId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -140,8 +140,8 @@ namespace UsuariosApi.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    LoginProvider = table.Column<string>(type: "varchar(127)", nullable: false),
-                    Name = table.Column<string>(type: "varchar(127)", nullable: false),
+                    LoginProvider = table.Column<string>(type: "varchar(200)", nullable: false),
+                    Name = table.Column<string>(type: "varchar(200)", nullable: false),
                     Value = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
